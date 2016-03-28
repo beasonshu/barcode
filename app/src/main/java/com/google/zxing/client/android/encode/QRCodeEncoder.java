@@ -390,7 +390,7 @@ final class QRCodeEncoder {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         if (logoRes>0){
-            Bitmap logoBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.launcher_icon);
+            Bitmap logoBitmap = BitmapFactory.decodeResource(activity.getResources(), logoRes);
             return addLogo(bitmap,logoBitmap);
         }
         return bitmap;
