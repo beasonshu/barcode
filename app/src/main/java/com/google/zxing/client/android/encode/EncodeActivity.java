@@ -205,7 +205,7 @@ public final class EncodeActivity extends Activity {
 
     try {
       boolean useVCard = intent.getBooleanExtra(USE_VCARD_KEY, false);
-      qrCodeEncoder = new QRCodeEncoder(this, intent, smallerDimension, useVCard);
+      qrCodeEncoder = new QRCodeEncoder(this, intent, smallerDimension, useVCard,R.drawable.launcher_icon);
       Bitmap bitmap = qrCodeEncoder.encodeAsBitmap();
       if (bitmap == null) {
         Log.w(TAG, "Could not encode barcode");
