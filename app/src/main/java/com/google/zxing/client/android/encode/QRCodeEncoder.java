@@ -70,11 +70,25 @@ final class QRCodeEncoder {
     private BarcodeFormat format;
     private final int dimension;
     private final boolean useVCard;
+    private int logoRes;
 
     QRCodeEncoder(Context activity, Intent intent, int dimension, boolean useVCard) throws WriterException {
         this.activity = activity;
         this.dimension = dimension;
         this.useVCard = useVCard;
+        String action = intent.getAction();
+        if (action.equals(Intents.Encode.ACTION)) {
+            encodeContentsFromZXingIntent(intent);
+        } else if (action.equals(Intent.ACTION_SEND)) {
+            encodeContentsFromShareIntent(intent);
+        }
+    }
+
+    QRCodeEncoder(Context activity, Intent intent, int dimension, boolean useVCard,int logoRes) throws WriterException {
+        this.activity = activity;
+        this.dimension = dimension;
+        this.useVCard = useVCard;
+        this.logoRes = logoRes;
         String action = intent.getAction();
         if (action.equals(Intents.Encode.ACTION)) {
             encodeContentsFromZXingIntent(intent);
@@ -375,8 +389,11 @@ final class QRCodeEncoder {
 
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        Bitmap logoBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.launcher_icon);
-        return addLogo(bitmap,logoBitmap);
+        if (logoRes>0){
+            Bitmap logoBitmap = BitmapFactory.decodeResource(activity.getResources(), R.drawable.launcher_icon);
+            return addLogo(bitmap,logoBitmap);
+        }
+        return bitmap;
     }
 
     /**
