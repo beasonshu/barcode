@@ -366,10 +366,11 @@ final class QRCodeEncoder {
         }
         Map<EncodeHintType, Object> hints = null;
         String encoding = guessAppropriateEncoding(contentsToEncode);
+        hints = new EnumMap<>(EncodeHintType.class);
         if (encoding != null) {
-            hints = new EnumMap<>(EncodeHintType.class);
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
         }
+        hints.put(EncodeHintType.MARGIN, 2);//设置边距
         BitMatrix result;
         try {
             result = new MultiFormatWriter().encode(contentsToEncode, format, dimension, dimension, hints);
